@@ -40,11 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IConversionManager.cs" />
+    <Compile Include="Abstract\SyncManager.cs" />
+    <Compile Include="Concrete\LinearSyncManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Concrete\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{d58c8f72-d234-4b2c-b2a5-aa7f77456982}</Project>

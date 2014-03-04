@@ -1,9 +1,5 @@
-﻿using SubsToolBox.Model.Entities.Abstract;
+﻿using SubsToolBox.Model.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SubsToolBox.Business.Abstract
 {
@@ -21,7 +17,7 @@ namespace SubsToolBox.Business.Abstract
         /// <param name="firstSub"></param>
         /// <param name="secondSub"></param>
         /// <returns></returns>
-        TimeSpan GetTimeGap(ISubtitle firstSub, ISubtitle secondSub);
+        TimeSpan GetTimeGap(Subtitle firstSub, Subtitle secondSub);
         
     }
 }

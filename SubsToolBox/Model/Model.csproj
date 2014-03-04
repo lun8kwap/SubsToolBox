@@ -39,10 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Abstract\ISubtitle.cs" />
-    <Compile Include="Entities\Abstract\ISubtitleFile.cs" />
-    <Compile Include="Entities\Concrete\Subtitle.cs" />
-    <Compile Include="Entities\Concrete\SubtitleFile.cs" />
+    <Compile Include="Entities\Subtitle.cs" />
+    <Compile Include="Entities\SubtitleFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

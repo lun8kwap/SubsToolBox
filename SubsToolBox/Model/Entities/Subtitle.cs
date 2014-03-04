@@ -1,13 +1,12 @@
-﻿using SubsToolBox.Model.Entities.Abstract;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SubsToolBox.Model.Entities.Concrete
+namespace SubsToolBox.Model.Entities
 {
-    public class Subtitle : ISubtitle
+    public class Subtitle
     {
         #region Members
 
