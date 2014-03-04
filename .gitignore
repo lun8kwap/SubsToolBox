@@ -1,0 +1,5 @@
+*.suo
+SubsToolBox/Model/bin/
+SubsToolBox/Model/obj/
+SubsToolBox/Business/bin/
+SubsToolBox/Business/obj/
