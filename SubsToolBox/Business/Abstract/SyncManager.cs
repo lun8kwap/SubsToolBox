@@ -1,4 +1,4 @@
-﻿using SubsToolBox.Model.Entities;
+﻿using SubsToolBox.Model;
 using System;
 
 namespace SubsToolBox.Business.Abstract
@@ -11,10 +11,23 @@ namespace SubsToolBox.Business.Abstract
 
         #endregion
 
-        #region Virtual Methods
+        #region Abstract Methods
 
-        public virtual SubtitleFile SyncFile()
+        public abstract SubtitleFile SyncFile();
+
+        #endregion
+
+        #region Public Methods
+
+        public void RemoveOverlap(ref SubtitleFile inputFile)
         {
+            for (int i = 0; i < inputFile.Subtitles.Count-1; i++)
+            {
+                if (inputFile.Subtitles[i].End > inputFile.Subtitles[i+1].Start)
+                {
+                    inputFile.Subtitles[i].End = inputFile.Subtitles[i + 1].Start - TimeSpan.FromMilliseconds(1);
+                }
+            }
         }
 
         #endregion

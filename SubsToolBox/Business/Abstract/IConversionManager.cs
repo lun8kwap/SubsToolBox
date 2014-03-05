@@ -1,4 +1,4 @@
-﻿using SubsToolBox.Model.Entities;
+﻿using SubsToolBox.Model;
 using System;
 
 namespace SubsToolBox.Business.Abstract

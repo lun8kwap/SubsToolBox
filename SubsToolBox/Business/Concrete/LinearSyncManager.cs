@@ -1,5 +1,5 @@
 ﻿using SubsToolBox.Business.Abstract;
-using SubsToolBox.Model.Entities;
+using SubsToolBox.Model;
 using System;
 using System.Linq;
 
@@ -16,7 +16,6 @@ namespace SubsToolBox.Business.Concrete
         };
 
         private TimeSpan timeGap;
-        private SubtitleFile outputFile;
         private SyncMode syncMode;
 
         #endregion
@@ -46,7 +45,7 @@ namespace SubsToolBox.Business.Concrete
         /// </summary>
         private void InitializeSyncDirection()
         {
-            TimeSpan inputfirstSubtitleTime = this.inputFile.Subs.OrderBy(s => s.Id).First().Start;
+            TimeSpan inputfirstSubtitleTime = this.inputFile.Subtitles.OrderBy(s => s.Id).First().Start;
             if (inputfirstSubtitleTime > this.firstSubtitleTime)
             {
                 this.syncMode = SyncMode.FileFirst;
@@ -64,11 +63,11 @@ namespace SubsToolBox.Business.Concrete
         {
             if (this.syncMode == SyncMode.FileFirst)
             {
-                this.timeGap = this.inputFile.Subs.OrderBy(s => s.Id).First().Start - this.firstSubtitleTime;
+                this.timeGap = this.inputFile.Subtitles.OrderBy(s => s.Id).First().Start - this.firstSubtitleTime;
             }
             else
             {
-                this.timeGap = this.firstSubtitleTime - this.inputFile.Subs.OrderBy(s => s.Id).First().Start;
+                this.timeGap = this.firstSubtitleTime - this.inputFile.Subtitles.OrderBy(s => s.Id).First().Start;
             }
         }
 
@@ -105,15 +104,15 @@ namespace SubsToolBox.Business.Concrete
         /// Create new file of resynced subtitles prefixed with "OUT_"
         /// </summary>
         /// <returns>New resynced subtitle file</returns>
-        public SubtitleFile SyncFile()
+        public override SubtitleFile SyncFile()
         {
             SubtitleFile outputFile = new SubtitleFile();
             outputFile.FileDirectory = this.inputFile.FileDirectory;
             outputFile.FileName = "OUT_"+this.inputFile.FileName;
 
-            foreach (Subtitle sub in this.inputFile.Subs)
+            foreach (Subtitle sub in this.inputFile.Subtitles)
             {
-                outputFile.Subs.Add(SyncSubtitle(sub));
+                outputFile.Subtitles.Add(SyncSubtitle(sub));
             }
 
             return outputFile;
