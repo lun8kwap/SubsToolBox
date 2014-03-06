@@ -7,6 +7,7 @@ namespace SubsToolBox.Business.Abstract
     {
         #region Public Members
 
+        public TimeSpan firstSubtitleTime { get; set; }
         public SubtitleFile inputFile { get; set; }
 
         #endregion

@@ -45,6 +45,11 @@ namespace SubsToolBox.Service
             }
         }
 
+        public void ProgressiveSynchronization(string inputLastTime, bool overlapFix)
+        {
+            
+        }
+
         #endregion
     }
 }

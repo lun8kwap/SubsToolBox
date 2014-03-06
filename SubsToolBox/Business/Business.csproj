@@ -39,9 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IConversionManager.cs" />
     <Compile Include="Abstract\SyncManager.cs" />
     <Compile Include="Concrete\LinearSyncManager.cs" />
+    <Compile Include="Concrete\ProgressiveSyncManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

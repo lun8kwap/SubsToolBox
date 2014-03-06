@@ -1,18 +1,5 @@
 ﻿using SubsToolBox.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SubsToolBoxWPF
 {
@@ -24,6 +11,7 @@ namespace SubsToolBoxWPF
         public MainWindow()
         {
             InitializeComponent();
+            BtnLaunch.IsEnabled = false;
         }
 
         private void OpenSubtitleFile(object sender, RoutedEventArgs e)
@@ -35,14 +23,27 @@ namespace SubsToolBoxWPF
             if (ofd.ShowDialog() == true)
             {
                 TxtSubtitlePath.Text = ofd.FileName;
+                BtnLaunch.IsEnabled = true;
+            }
+            else
+            {
+                BtnLaunch.IsEnabled = false;
             }
         }
 
         private void LaunchSync(object sender, RoutedEventArgs e)
         {
-            // Test
-            SyncService service = new SyncService(TxtSubtitlePath.Text, "00:00:51,320");
-            service.LinearSynchronization(true);
+            SyncService service = new SyncService(TxtSubtitlePath.Text, TxtFirstTimecode.Text);
+
+            if (rbtLinearResync.IsChecked.Value)
+            {
+                service.LinearSynchronization(chkOverlapFix.IsChecked.Value);
+            }
+
+            if (rbtProgressiveResync.IsChecked.Value)
+            {
+                service.ProgressiveSynchronization(TxtLastTimecode.Text, chkOverlapFix.IsChecked.Value);
+            }
         }
     }
 }

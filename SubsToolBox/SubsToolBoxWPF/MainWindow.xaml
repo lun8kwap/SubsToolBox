@@ -1,16 +1,28 @@
 ﻿<Window x:Class="SubsToolBoxWPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="270" Width="600">
+        Title="SubsToolBox" Height="270" Width="600">
     <Grid Background="#FFE4E8EA">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="0*"/>
         </Grid.RowDefinitions>
-        <Label Content="Subtile : " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="56"/>
+        <Label Content="Subtile : " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="56" FontWeight="Bold"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="71,10,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="431" Name="TxtSubtitlePath" IsReadOnly="True"/>
         <Button Content="Open" HorizontalAlignment="Left" Margin="507,10,0,0" VerticalAlignment="Top" Width="75" Click="OpenSubtitleFile" Height="22"/>
-        <Button Content="Launch" HorizontalAlignment="Left" Margin="507,208,0,0" VerticalAlignment="Top" Width="75" Click="LaunchSync"/>
-
+        <Button Content="Launch" HorizontalAlignment="Left" Margin="507,208,0,0" VerticalAlignment="Top" Width="75" Click="LaunchSync" Name="BtnLaunch"/>
+        <Rectangle Fill="#FFF1F1E2" HorizontalAlignment="Left" Height="162" Margin="336,41,0,0" Stroke="Black" VerticalAlignment="Top" Width="246"/>
+        <Rectangle Fill="#FFF1F1E2" HorizontalAlignment="Left" Height="162" Margin="10,41,0,0" Stroke="Black" VerticalAlignment="Top" Width="321"/>
+        <Label Content="Resynchronization to apply :" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <RadioButton Content="Linear resync" HorizontalAlignment="Left" Margin="19,67,0,0" VerticalAlignment="Top" GroupName="ReSyncType" Name="rbtLinearResync"/>
+        <RadioButton Content="Progressive resync" HorizontalAlignment="Left" Margin="19,88,0,0" VerticalAlignment="Top" GroupName="ReSyncType" Name="rbtProgressiveResync"/>
+        <Label Content="Options :" HorizontalAlignment="Left" Margin="10,123,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <CheckBox Content="Remove subtitles overlap" HorizontalAlignment="Left" Margin="19,149,0,0" VerticalAlignment="Top" Name="chkOverlapFix"/>
+        <Label Content="Start file from Id=" HorizontalAlignment="Left" Margin="10,167,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="114,170,0,0" TextWrapping="Wrap" Name="TxtFirstSubtitleId" VerticalAlignment="Top" Width="19" />
+        <Label Content="First timecode expected :" HorizontalAlignment="Left" Margin="336,41,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="341,67,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="166" Name="TxtFirstTimecode"/>
+        <Label Content="Last timecode expected :" HorizontalAlignment="Left" Margin="336,104,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="341,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Name="TxtLastTimecode"/>
     </Grid>
 </Window>

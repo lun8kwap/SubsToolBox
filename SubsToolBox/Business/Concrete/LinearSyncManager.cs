@@ -20,12 +20,6 @@ namespace SubsToolBox.Business.Concrete
 
         #endregion
 
-        #region Public Members
-
-        public TimeSpan firstSubtitleTime { get; set; }
-
-        #endregion
-
         #region Constructor
 
         public LinearSyncManager(SubtitleFile inputFile, TimeSpan firstSubtitleTime)
