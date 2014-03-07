@@ -1,6 +1,7 @@
 ﻿using SubsToolBox.Business.Abstract;
 using SubsToolBox.Model;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace SubsToolBox.Business.Concrete
@@ -98,11 +99,11 @@ namespace SubsToolBox.Business.Concrete
         /// Create new file of resynced subtitles prefixed with "OUT_"
         /// </summary>
         /// <returns>New resynced subtitle file</returns>
-        public override SubtitleFile SyncFile()
+        public override SubtitleFile SyncFile(string outputFilePath)
         {
             SubtitleFile outputFile = new SubtitleFile();
-            outputFile.FileDirectory = this.inputFile.FileDirectory;
-            outputFile.FileName = "OUT_"+this.inputFile.FileName;
+            outputFile.FileDirectory = Path.GetDirectoryName(outputFilePath);
+            outputFile.FileName = Path.GetFileName(outputFilePath);
 
             foreach (Subtitle sub in this.inputFile.Subtitles)
             {

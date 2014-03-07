@@ -1,4 +1,5 @@
 ﻿using SubsToolBox.Model;
+using SubsToolBox.Service.Resource;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -116,6 +117,27 @@ namespace SubsToolBox.Service.Helpers
             outputFile.Subtitles = GetSubtitlesListFromFilePath(subtitleFilePath);
 
             return outputFile;
+        }
+
+        /// <summary>
+        /// Write the SUbtitleFile object as a physical file to its FileDirectory+FileName properties
+        /// </summary>
+        /// <param name="subtitleFile">SubtitleFile to physically write</param>
+        public void WriteSubtitleFilePhysically(SubtitleFile subtitleFile)
+        {
+            using (var file = File.AppendText(subtitleFile.FileDirectory + "\\" + subtitleFile.FileName))
+            {
+                foreach (Subtitle sub in subtitleFile.Subtitles)
+                {
+                    file.WriteLine(sub.Id);
+                    file.WriteLine(sub.Start.ToString(ServiceResource.TIMECODE_FORMAT) + ServiceResource.TIMECODE_SEPARATOR + sub.End.ToString(ServiceResource.TIMECODE_FORMAT));
+                    foreach (string s in sub.Text)
+                    {
+                        file.WriteLine(s);
+                    }
+                    file.WriteLine("");
+                }
+            }
         }
 
         #endregion

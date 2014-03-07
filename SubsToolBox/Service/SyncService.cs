@@ -22,32 +22,52 @@ namespace SubsToolBox.Service
 
         #region Constructor
 
-        public SyncService(string inputFilePath, string inputFirstTime)
+        public SyncService(string inputFilePath, string inputFirstTime, int firstId)
         {
             FileHelper fh = new FileHelper();
             this.inputFile = fh.GenerateSubtitleFile(inputFilePath);
+            this.inputFile.StartSubtitleListFromId(firstId);
 
             this.inputFirstTime = TimeSpan.Parse(inputFirstTime);
         }
 
         #endregion
 
+        #region Private Methods
+
+        private void PhysicallyWriteSubtitleFile(SubtitleFile subtitleFile)
+        {
+            FileHelper fh = new FileHelper();
+            fh.WriteSubtitleFilePhysically(subtitleFile);
+        }
+
+        #endregion
+
         #region Public Methods
 
-        public void LinearSynchronization(bool overlapFix)
+        public void LinearSynchronization(string outputFilePath, bool overlapFix)
         {
             sm = new LinearSyncManager(this.inputFile, this.inputFirstTime);
-            SubtitleFile outputFile = sm.SyncFile();
+            SubtitleFile outputFile = sm.SyncFile(outputFilePath);
 
             if (overlapFix)
             {
                 sm.RemoveOverlap(ref outputFile);
             }
+
+            try
+            {
+                PhysicallyWriteSubtitleFile(outputFile);
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
         }
 
-        public void ProgressiveSynchronization(string inputLastTime, bool overlapFix)
+        public void ProgressiveSynchronization(string outputFilePath, string inputLastTime, bool overlapFix)
         {
-            
+
         }
 
         #endregion

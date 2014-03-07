@@ -18,7 +18,7 @@ namespace SubsToolBox.Business.Concrete
 
         #region Public Methods
 
-        public override SubtitleFile SyncFile()
+        public override SubtitleFile SyncFile(string outputFilePath)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,6 @@
-﻿using SubsToolBox.Service;
+﻿using Microsoft.Win32;
+using SubsToolBox.Service;
+using System.IO;
 using System.Windows;
 
 namespace SubsToolBoxWPF
@@ -8,6 +10,8 @@ namespace SubsToolBoxWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string OUTPUT_PREFIX = "out_";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -16,13 +20,14 @@ namespace SubsToolBoxWPF
 
         private void OpenSubtitleFile(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            OpenFileDialog ofd = new OpenFileDialog();
             ofd.DefaultExt = ".srt";
             ofd.Filter = "Subtitle file (.srt)|*.srt";
 
             if (ofd.ShowDialog() == true)
             {
                 TxtSubtitlePath.Text = ofd.FileName;
+                TxtDestinationFile.Text = GetOutputDestination(ofd.FileName);
                 BtnLaunch.IsEnabled = true;
             }
             else
@@ -33,17 +38,48 @@ namespace SubsToolBoxWPF
 
         private void LaunchSync(object sender, RoutedEventArgs e)
         {
-            SyncService service = new SyncService(TxtSubtitlePath.Text, TxtFirstTimecode.Text);
-
-            if (rbtLinearResync.IsChecked.Value)
+            int startId;
+            if (int.TryParse(TxtFirstSubtitleId.Text, out startId))
             {
-                service.LinearSynchronization(chkOverlapFix.IsChecked.Value);
-            }
+                SyncService service = new SyncService(TxtSubtitlePath.Text, TxtFirstTimecode.Text, startId);
 
-            if (rbtProgressiveResync.IsChecked.Value)
-            {
-                service.ProgressiveSynchronization(TxtLastTimecode.Text, chkOverlapFix.IsChecked.Value);
+                if (rbtLinearResync.IsChecked.Value)
+                {
+                    service.LinearSynchronization(TxtDestinationFile.Text, chkOverlapFix.IsChecked.Value);
+                }
+
+                if (rbtProgressiveResync.IsChecked.Value)
+                {
+                    service.ProgressiveSynchronization(TxtDestinationFile.Text, TxtLastTimecode.Text, chkOverlapFix.IsChecked.Value);
+                }
             }
+        }
+
+        private void OpenDestinationFile(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.InitialDirectory = Path.GetDirectoryName(TxtDestinationFile.Text);
+            sfd.DefaultExt = ".srt";
+            sfd.FileName = Path.GetFileName(TxtDestinationFile.Text);
+            sfd.Filter = "Subtitle file (.srt)|*.srt";
+
+            if (sfd.ShowDialog() == true)
+            {
+                TxtDestinationFile.Text = sfd.FileName;
+            }
+        }
+        
+        /// <summary>
+        /// Generate default output destination from input file and default prefix use
+        /// </summary>
+        /// <param name="inputFile">Path to input file</param>
+        /// <returns>Destination file path</returns>
+        private string GetOutputDestination(string inputFile){
+            string output = Path.GetDirectoryName(inputFile);
+            output += "\\"+OUTPUT_PREFIX;
+            output += Path.GetFileName(inputFile);
+
+            return output;
         }
     }
 }

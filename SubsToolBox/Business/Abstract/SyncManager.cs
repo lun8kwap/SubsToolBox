@@ -14,7 +14,7 @@ namespace SubsToolBox.Business.Abstract
 
         #region Abstract Methods
 
-        public abstract SubtitleFile SyncFile();
+        public abstract SubtitleFile SyncFile(string outputFilePath);
 
         #endregion
 
