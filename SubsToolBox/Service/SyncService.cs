@@ -65,9 +65,24 @@ namespace SubsToolBox.Service
             }
         }
 
-        public void ProgressiveSynchronization(string outputFilePath, string inputLastTime, bool overlapFix)
+        public void ProgressiveSynchronization(string outputFilePath, double videoFrameRate, double subtitleFrameRate, bool overlapFix)
         {
+            sm = new ProgressiveSyncManager(this.inputFile, this.inputFirstTime, videoFrameRate, subtitleFrameRate);
+            SubtitleFile outputFile = sm.SyncFile(outputFilePath);
 
+            if (overlapFix)
+            {
+                sm.RemoveOverlap(ref outputFile);
+            }
+
+            try
+            {
+                PhysicallyWriteSubtitleFile(outputFile);
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
         }
 
         #endregion
