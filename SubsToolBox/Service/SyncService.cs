@@ -65,7 +65,7 @@ namespace SubsToolBox.Service
             }
         }
 
-        public void ProgressiveSynchronization(string outputFilePath, double videoFrameRate, double subtitleFrameRate, bool overlapFix)
+        public void ProgressiveSynchronization(string outputFilePath, double videoFrameRate, double subtitleFrameRate, string inputLastTime, bool overlapFix)
         {
             sm = new ProgressiveSyncManager(this.inputFile, this.inputFirstTime, videoFrameRate, subtitleFrameRate);
             SubtitleFile outputFile = sm.SyncFile(outputFilePath);

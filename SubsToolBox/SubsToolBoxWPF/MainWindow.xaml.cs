@@ -50,8 +50,9 @@ namespace SubsToolBoxWPF
 
                 if (rbtProgressiveResync.IsChecked.Value)
                 {
-                    //TODO : Manage framerates input
-                    //service.ProgressiveSynchronization(TxtDestinationFile.Text, TxtLastTimecode.Text, chkOverlapFix.IsChecked.Value);
+                    double videoFps, subtitleFps;
+                    if (double.TryParse(TxtVideoFrameRate.Text, out videoFps) && double.TryParse(TxtSubtitleFrameRate.Text, out subtitleFps))
+                        service.ProgressiveSynchronization(TxtDestinationFile.Text, videoFps, subtitleFps, TxtLastTimecode.Text, chkOverlapFix.IsChecked.Value);
                 }
             }
         }
