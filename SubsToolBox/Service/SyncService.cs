@@ -3,10 +3,6 @@ using SubsToolBox.Business.Concrete;
 using SubsToolBox.Model;
 using SubsToolBox.Service.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SubsToolBox.Service
 {
@@ -22,13 +18,12 @@ namespace SubsToolBox.Service
 
         #region Constructor
 
-        public SyncService(string inputFilePath, string inputFirstTime, int firstId)
+        public SyncService(string inputFilePath, TimeSpan inputFirstTime, int firstId)
         {
             FileHelper fh = new FileHelper();
             this.inputFile = fh.GenerateSubtitleFile(inputFilePath);
             this.inputFile.StartSubtitleListFromId(firstId);
-
-            this.inputFirstTime = TimeSpan.Parse(inputFirstTime);
+            this.inputFirstTime = inputFirstTime;
         }
 
         #endregion
@@ -65,7 +60,7 @@ namespace SubsToolBox.Service
             }
         }
 
-        public void ProgressiveSynchronization(string outputFilePath, double videoFrameRate, double subtitleFrameRate, string inputLastTime, bool overlapFix)
+        public void ProgressiveSynchronization(string outputFilePath, double videoFrameRate, double subtitleFrameRate, TimeSpan inputLastTime, bool overlapFix)
         {
             sm = new ProgressiveSyncManager(this.inputFile, this.inputFirstTime, videoFrameRate, subtitleFrameRate);
             SubtitleFile outputFile = sm.SyncFile(outputFilePath);

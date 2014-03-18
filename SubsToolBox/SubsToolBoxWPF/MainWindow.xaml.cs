@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using SubsToolBox.Service;
+using System;
 using System.IO;
 using System.Windows;
 
@@ -41,18 +42,25 @@ namespace SubsToolBoxWPF
             int startId;
             if (int.TryParse(TxtFirstSubtitleId.Text, out startId))
             {
-                SyncService service = new SyncService(TxtSubtitlePath.Text, TxtFirstTimecode.Text, startId);
-
-                if (rbtLinearResync.IsChecked.Value)
+                try
                 {
-                    service.LinearSynchronization(TxtDestinationFile.Text, chkOverlapFix.IsChecked.Value);
+                    SyncService service = new SyncService(TxtSubtitlePath.Text, TimeSpan.Parse(TxtFirstTimecode.Text), startId);
+
+                    if (rbtLinearResync.IsChecked.Value)
+                    {
+                        service.LinearSynchronization(TxtDestinationFile.Text, chkOverlapFix.IsChecked.Value);
+                    }
+
+                    if (rbtProgressiveResync.IsChecked.Value)
+                    {
+                        double videoFps, subtitleFps;
+                        if (double.TryParse(TxtVideoFrameRate.Text, out videoFps) && double.TryParse(TxtSubtitleFrameRate.Text, out subtitleFps))
+                            service.ProgressiveSynchronization(TxtDestinationFile.Text, videoFps, subtitleFps, TimeSpan.Parse(TxtLastTimecode.Text), chkOverlapFix.IsChecked.Value);
+                    }
                 }
-
-                if (rbtProgressiveResync.IsChecked.Value)
+                catch(Exception ex)
                 {
-                    double videoFps, subtitleFps;
-                    if (double.TryParse(TxtVideoFrameRate.Text, out videoFps) && double.TryParse(TxtSubtitleFrameRate.Text, out subtitleFps))
-                        service.ProgressiveSynchronization(TxtDestinationFile.Text, videoFps, subtitleFps, TxtLastTimecode.Text, chkOverlapFix.IsChecked.Value);
+                    throw ex;
                 }
             }
         }
