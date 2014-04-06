@@ -17,6 +17,12 @@ namespace SubsToolBoxWPF
         {
             InitializeComponent();
             BtnLaunch.IsEnabled = false;
+
+
+            // TODO : Mettre en ressource
+            TxtFirstSubtitleId.Text = "1";
+            TxtVideoFrameRate.Text = "25";
+            TxtSubtitleFrameRate.Text = "23,976";
         }
 
         private void OpenSubtitleFile(object sender, RoutedEventArgs e)
@@ -44,6 +50,8 @@ namespace SubsToolBoxWPF
             {
                 try
                 {
+                    BtnLaunch.IsEnabled = false;
+
                     SyncService service = new SyncService(TxtSubtitlePath.Text, TimeSpan.Parse(TxtFirstTimecode.Text), startId);
 
                     if (rbtLinearResync.IsChecked.Value)
@@ -57,6 +65,9 @@ namespace SubsToolBoxWPF
                         if (double.TryParse(TxtVideoFrameRate.Text, out videoFps) && double.TryParse(TxtSubtitleFrameRate.Text, out subtitleFps))
                             service.ProgressiveSynchronization(TxtDestinationFile.Text, videoFps, subtitleFps, TimeSpan.Parse(TxtLastTimecode.Text), chkOverlapFix.IsChecked.Value);
                     }
+
+                    BtnLaunch.IsEnabled = true;
+                    TxtDestinationFile.Text = "";
                 }
                 catch(Exception ex)
                 {
